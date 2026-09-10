@@ -1,0 +1,45 @@
+.customRange {
+  display: flex;
+  flex-direction: column;
+  width: var(--custom-range-width, 100%);
+  max-width: var(--custom-range-max-width, 100%);
+  min-width: var(--custom-range-min-width, 0);
+}
+
+.label {
+  color: var(--color-gray);
+  margin-bottom: 8px;
+}
+
+.inputWrapper {
+  display: flex;
+}
+
+.inputNumber {
+  flex: 1;
+  padding: 12px 24px;
+  border: none;
+  min-width: 0;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.inputNumber:focus {
+  outline: none;
+}
+
+.inputNumber::-webkit-outer-spin-button,
+.inputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.inputNumberFrom {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-right: 1px solid var(--color-gray-light);
+}
+.inputNumberTo {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}

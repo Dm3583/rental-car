@@ -1,14 +1,11 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 
-const BASE_URL = 'ACTUAL_API_URL'; // Replace with your actual API URL 
+const BASE_URL = 'https://car-rental-api.goit.study';
 
-const notesApiClient: AxiosInstance = axios.create({
+const carsApiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
-  headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-  },
 });
 
-export default notesApiClient;
+export default carsApiClient;

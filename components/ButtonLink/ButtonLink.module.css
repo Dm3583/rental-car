@@ -1,0 +1,13 @@
+.buttonLinkBlue {
+  display: inline-block;
+  color: var(--color-white);
+  background-color: var(--color-light-blue);
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.buttonLinkBlue:hover {
+  background-color: var(--color-dark-blue);
+}

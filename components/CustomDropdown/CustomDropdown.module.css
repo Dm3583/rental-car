@@ -1,0 +1,134 @@
+.dropdownWrapper {
+  display: flex;
+  flex-direction: column;
+  width: var(--dropdown-width, 100%);
+  max-width: var(--dropdown-max-width, 100%);
+  min-width: 0;
+}
+
+.dropdown {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  user-select: none;
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: var(--color-white);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+.trigger:disabled {
+  background-color: var(--color-gray-lighter);
+  cursor: not-allowed;
+}
+
+.trigger:disabled > span {
+  color: var(--color-gray);
+}
+
+.trigger:disabled img {
+  opacity: 0.5;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--color-dark-blue);
+  outline-offset: 2px;
+}
+
+.trigger > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: var(--color-gray);
+}
+
+.label {
+  color: var(--color-gray);
+  margin-bottom: 8px;
+}
+
+.arrow {
+  transition: transform 200ms ease;
+}
+
+.arrowOpen {
+  transition: transform 200ms ease;
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10; /* sibling dropdowns are positioned too, and paint in DOM order */
+  width: 100%;
+  max-height: 204px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 10px 10px 10px 18px;
+  list-style: none;
+  background-color: var(--color-white);
+  border-radius: 12px;
+  border-right: 8px solid transparent;
+}
+
+.menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.menu::-webkit-scrollbar-button {
+  display: none;
+}
+
+.menu::-webkit-scrollbar-track {
+  margin: 12px 0;
+  background: transparent;
+}
+
+.menu::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-light);
+  border-radius: 4px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .menu {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gray-light) transparent;
+  }
+}
+
+.option {
+  padding: 4px 8px;
+  margin: 0 -8px;
+  border-radius: 4px;
+  color: var(--color-gray);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Cursor position: driven by both arrow keys and hover, never by :hover. */
+.active {
+  background-color: var(--color-gray-lighter);
+  color: var(--color-main);
+}
+
+.selected {
+  color: var(--color-main);
+  font-weight: 600;
+}
