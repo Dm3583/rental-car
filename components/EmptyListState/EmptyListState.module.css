@@ -1,0 +1,27 @@
+.emptyListState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding-bottom: 40px;
+}
+
+.heroImage {
+  display: block;
+  width: 100%;
+  max-width: 414px;
+  height: auto;
+}
+
+.title {
+  margin-top: 40px;
+}
+
+.description {
+  max-width: 320px;
+  margin: 0 auto;
+  margin-top: 16px;
+}

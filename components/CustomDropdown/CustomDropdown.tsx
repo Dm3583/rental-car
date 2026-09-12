@@ -11,10 +11,10 @@ export interface Option {
 
 type CssSize = `${number}px` | `${number}%` | `${number}rem`;
 
-interface CustomDropdownProps {
+interface CustomDropdownProps<TName extends string = string> {
   options: Option[];
   label: string;
-  name: string;
+  name: TName;
   value?: string;
   valuePrefix?: string;
   placeholder?: string;
@@ -22,10 +22,10 @@ interface CustomDropdownProps {
   width?: CssSize;
   maxWidth?: CssSize;
   disabled?: boolean;
-  onChange: (name: string, value: string) => void;
+  onChange: (name: TName, value: string) => void;
 }
 
-const CustomDropdown = ({
+const CustomDropdown = <TName extends string = string>({
   options,
   label,
   name,
@@ -37,7 +37,7 @@ const CustomDropdown = ({
   valuePrefix,
   disabled = false,
   onChange,
-}: CustomDropdownProps) => {
+}: CustomDropdownProps<TName>) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
 

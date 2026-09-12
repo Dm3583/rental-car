@@ -5,93 +5,104 @@ import styles from './FilterBar.module.css';
 import CustomDropdown from '@/components/CustomDropdown/CustomDropdown';
 import CustomRange from '../CustomRange/CustomRange';
 import Button from '../Button/Button';
-import { toNumberOrUndefined } from '@/lib/utils';
+import { getPriceOptions, toDigits, toNumberOrUndefined } from '@/lib/utils';
+import { FILTER_FIELDS, FilterField, Filters, FilterValue } from '@/types/car';
 
-const TEST_OPTIONS = [
-  {
-    value: 'BMV',
-    label: 'BMV',
-  },
-  { value: 'Mercedes', label: 'Mercedes' },
-  { value: 'Kia', label: 'Kia' },
-  { value: 'Suzuki', label: 'Suzuki' },
-  { value: 'Honda', label: 'Honda' },
-  { value: 'Bajaj', label: 'Bajaj' },
-  { value: 'KTM', label: 'KTM' },
-  { value: 'Kawasaki', label: 'Kawasaki' },
-  { value: 'Husquarna', label: 'Husquarna' },
-  { value: 'Lifan', label: 'Lifan' },
-  { value: 'Saturn', label: 'Saturn' },
-  { value: 'Dacia', label: 'Dacia' },
-  { value: 'Renault', label: 'Renault' },
-];
-
-const TEST_PRICE = [
-  { value: '10', label: '10' },
-  { value: '20', label: '20' },
-  { value: '30', label: '30' },
-  { value: '40', label: '40' },
-];
-
-interface FilterValue {
-  brand?: string;
-  price?: string;
-  milageFrom?: number;
-  milageTo?: number;
+interface FilterBarProps {
+  filters: Filters;
+  /** Starting values, taken from the URL. */
+  initialValue?: FilterValue;
+  onSearch: (filterValue: FilterValue) => void;
 }
 
-export default function FilterBar() {
-  const [filterValue, setFilterValue] = useState<FilterValue>({});
-  const onFilterChange = (name: string, value: string) => {
+const MILAGE_ERROR_MESSAGE = '"From" must not be greater than "To"';
+
+export default function FilterBar({
+  filters,
+  initialValue = {},
+  onSearch,
+}: FilterBarProps) {
+  const [filterValue, setFilterValue] = useState<FilterValue>(initialValue);
+  // Set by a blocked Search so the mileage message shows even if focus is still in the range.
+  const [isMileageErrorForced, setIsMileageErrorForced] = useState(false);
+
+  const handleFilterChange = (name: FilterField, value: string) => {
     setFilterValue((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleMileageChange = (name: FilterField, raw: string) => {
+    setIsMileageErrorForced(false);
+    handleFilterChange(name, toDigits(raw));
+  };
+
+  const brandOptions = filters.brands.map((brand) => ({
+    value: brand,
+    label: brand,
+  }));
+
+  const priceOptions = getPriceOptions(filters.price);
+
+  const minMileage = toNumberOrUndefined(filterValue.minMileage ?? '');
+  const maxMileage = toNumberOrUndefined(filterValue.maxMileage ?? '');
+  const mileageError =
+    minMileage !== undefined &&
+    maxMileage !== undefined &&
+    minMileage > maxMileage
+      ? MILAGE_ERROR_MESSAGE
+      : undefined;
+
   const handleSearch = () => {
-    console.log(filterValue);
+    if (mileageError) {
+      setIsMileageErrorForced(true);
+      return;
+    }
+    onSearch(filterValue);
+  };
+
+  const handleReset = () => {
+    setFilterValue({});
+    setIsMileageErrorForced(false);
+    onSearch({});
   };
 
   return (
     <div className={styles.filterBar}>
       <div className={styles.filterBarRaw}>
         <CustomDropdown
-          options={TEST_OPTIONS}
+          options={brandOptions}
           label='Car brand'
-          name='brand'
+          name={FILTER_FIELDS.brand}
           placeholder='Choose a brand'
           resetLabel='All brands'
           maxWidth='204px'
-          onChange={onFilterChange}
+          onChange={handleFilterChange}
           value={filterValue.brand}
         />
 
         <CustomDropdown
-          options={TEST_PRICE}
+          options={priceOptions}
           label='Price/ 1 hour'
-          name='price'
+          name={FILTER_FIELDS.price}
           placeholder='Choose a price'
           resetLabel='All prices'
           maxWidth='196px'
-          onChange={onFilterChange}
+          onChange={handleFilterChange}
           value={filterValue.price}
           valuePrefix='To $'
         />
 
         <CustomRange
           label='Сar mileage / km'
-          valueFrom={filterValue.milageFrom}
-          valueTo={filterValue.milageTo}
+          valueFrom={filterValue.minMileage}
+          valueTo={filterValue.maxMileage}
           maxWidth='320px'
+          error={mileageError}
+          forceShowError={isMileageErrorForced}
           onChangeFrom={(e) =>
-            setFilterValue((prev) => ({
-              ...prev,
-              milageFrom: toNumberOrUndefined(e.target.value),
-            }))
+            handleMileageChange(FILTER_FIELDS.minMileage, e.target.value)
           }
           onChangeTo={(e) =>
-            setFilterValue((prev) => ({
-              ...prev,
-              milageTo: toNumberOrUndefined(e.target.value),
-            }))
+            handleMileageChange(FILTER_FIELDS.maxMileage, e.target.value)
           }
         />
 
@@ -100,7 +111,7 @@ export default function FilterBar() {
       <div className={styles.filterBarRaw}>
         <button
           type='button'
-          onClick={() => setFilterValue({})}
+          onClick={handleReset}
           className={styles.resetButton}
         >
           Clear filters

@@ -8,8 +8,6 @@
   --color-blue-gray: #f2f4f7;
   --color-gray-lighter: #f5f5f5;
   --color-gray-lightest: #f7f7f7;
-
-  /* Borders */
   --color-gray-light: #dadde1;
 
   /* Accent */
@@ -55,6 +53,14 @@ main {
   flex-direction: column;
 }
 
+.pageBg {
+  background-color: var(--color-gray-lighter);
+}
+
+.pageFullHeight {
+  flex: 1;
+}
+
 .container {
   width: 90%;
   max-width: 1440px;
@@ -79,4 +85,10 @@ main {
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
+}
+
+.title2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
 }

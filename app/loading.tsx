@@ -1,9 +1,7 @@
+import LoadingOverlay from '@/components/LoadingOverlay/LoadingOverlay';
+
 const Loader = () => {
-  return (
-    <div className='container'>
-      <p>Loading, please wait...</p>
-    </div>
-  );
+  return <LoadingOverlay title='Loading...' fullScreen />;
 };
 
 export default Loader;

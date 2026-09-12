@@ -1,0 +1,71 @@
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background-color: rgb(245 245 245 / 0.8);
+}
+
+/* Page-level loading: there is no positioned parent to cover. */
+.fullScreen {
+  position: fixed;
+  inset: 68px 0 0;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 543px;
+  max-width: calc(100vw - 32px);
+  min-height: 288px;
+  padding: 48px 96px;
+  border-radius: 16px;
+  text-align: center;
+  background-color: var(--color-white);
+}
+
+.spinner {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  animation: spin 800ms linear infinite;
+}
+
+.spinnerTrack {
+  stroke: var(--color-gray-lightest);
+}
+
+.spinnerArc {
+  stroke: var(--color-light-blue);
+  stroke-linecap: round;
+  stroke-dasharray: 52 207;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.textBlock {
+  width: 295px;
+  max-width: 100%;
+  margin-top: 32px;
+}
+
+.description {
+  margin-top: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2400ms;
+  }
+}

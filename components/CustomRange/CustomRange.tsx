@@ -1,15 +1,17 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import css from './CustomRange.module.css';
 
 interface CustomRangeProps {
   label: string;
-  valueFrom?: number;
-  valueTo?: number;
+  valueFrom?: string;
+  valueTo?: string;
   width?: string;
   maxWidth?: string;
   minWidth?: string;
   onChangeFrom?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeTo?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  forceShowError?: boolean;
 }
 
 const CustomRange = ({
@@ -21,11 +23,21 @@ const CustomRange = ({
   valueTo,
   onChangeFrom,
   onChangeTo,
+  error,
+  forceShowError = false,
 }: CustomRangeProps) => {
   const id = useId();
   const labelId = `${id}-label`;
   const fromId = `${id}-from`;
   const toId = `${id}-to`;
+  const errorId = `${id}-error`;
+
+  const [isFocusWithin, setIsFocusWithin] = useState(false);
+  const showError = Boolean(error) && (forceShowError || !isFocusWithin);
+
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) setIsFocusWithin(false);
+  };
 
   return (
     <div
@@ -41,13 +53,22 @@ const CustomRange = ({
       <span id={labelId} className={`${css.label} bodySm`}>
         {label}
       </span>
-      <div className={css.inputWrapper}>
+      <div
+        className={css.inputWrapper}
+        onFocus={() => setIsFocusWithin(true)}
+        onBlur={handleBlur}
+      >
         <span id={fromId} hidden>
           From
         </span>
         <input
-          type='number'
+          type='text'
+          inputMode='numeric'
+          pattern='[0-9]*'
+          autoComplete='off'
           aria-labelledby={`${labelId} ${fromId}`}
+          aria-invalid={showError || undefined}
+          aria-describedby={showError ? errorId : undefined}
           className={`${css.inputNumberFrom} ${css.inputNumber} bodyMd`}
           placeholder='From'
           value={valueFrom ?? ''}
@@ -58,14 +79,24 @@ const CustomRange = ({
           To
         </span>
         <input
-          type='number'
+          type='text'
+          inputMode='numeric'
+          pattern='[0-9]*'
+          autoComplete='off'
           aria-labelledby={`${labelId} ${toId}`}
+          aria-invalid={showError || undefined}
+          aria-describedby={showError ? errorId : undefined}
           className={`${css.inputNumberTo} ${css.inputNumber} bodyMd`}
           placeholder='To'
           value={valueTo ?? ''}
           onChange={onChangeTo}
         />
       </div>
+      {showError && (
+        <p id={errorId} className={`${css.error} bodySm`} role='alert'>
+          {error}
+        </p>
+      )}
     </div>
   );
 };
