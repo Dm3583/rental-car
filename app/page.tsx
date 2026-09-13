@@ -2,7 +2,7 @@ import Image from 'next/image';
 import ButtonLink from '@/components/ButtonLink/ButtonLink';
 import css from './page.module.css';
 
-export default function Home() {
+export default function HomePage() {
 
   return (
     <div>

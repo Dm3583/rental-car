@@ -51,5 +51,5 @@
   top: 100%;
   left: 0;
   margin-top: 4px;
-  color: red;
+  color: var(--color-error);
 }

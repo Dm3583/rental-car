@@ -12,13 +12,7 @@ const Header = () => {
     <header className={css.header}>
       <div className={'container ' + css.headerWrapper}>
         <Link href='/' aria-label='Home' className={css.logo}>
-          <Image
-            src='/Logo.svg'
-            alt='Rental Car'
-            width={104}
-            height={16}
-            priority
-          />
+          <Image src='/Logo.svg' alt='Rental Car' width={104} height={16} />
         </Link>
 
         <nav aria-label='Main Navigation'>

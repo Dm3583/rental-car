@@ -92,7 +92,7 @@ export default function FilterBar({
         />
 
         <CustomRange
-          label='Сar mileage / km'
+          label='Car mileage / km'
           valueFrom={filterValue.minMileage}
           valueTo={filterValue.maxMileage}
           maxWidth='320px'

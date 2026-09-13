@@ -1,0 +1,49 @@
+.detailsWrapper {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  max-width: 1200px;
+  gap: 32px;
+  margin: 0 auto;
+  padding: 84px 0;
+}
+
+.leftBlock {
+  width: 100%;
+  max-width: 640px;
+}
+
+.formWrapper {
+  margin-top: 32px;
+}
+
+.rightBlock {
+  width: 100%;
+  max-width: 528px;
+  padding: 32px 24px;
+  background-color: var(--color-white);
+  border-radius: 16px;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.carDetailsImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 640 / 512;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.errorWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px;
+}
+ 

@@ -1,0 +1,53 @@
+.textareaWrapper {
+  width: 100%;
+}
+
+.field {
+  position: relative;
+  width: 100%;
+}
+
+.customTextarea {
+  display: block;
+  width: 100%;
+  height: var(--textarea-height, 88px);
+  padding: 12px 20px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background-color: var(--color-gray-lightest);
+  color: var(--color-main);
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  outline: none;
+  resize: none;
+}
+
+.customTextarea::placeholder {
+  color: var(--color-gray);
+}
+
+.customTextarea.error {
+  border-color: var(--color-error);
+  background-color: var(--color-error-light);
+  /* Room for the icon on the right. */
+  padding-right: 48px;
+}
+
+.errorIcon {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--color-error);
+  pointer-events: none;
+}
+
+.errorMessage {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-error);
+}

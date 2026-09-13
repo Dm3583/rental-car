@@ -1,5 +1,5 @@
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
-import { fetchCars, fetchFilters } from './api';
+import { fetchCarById, fetchCars, fetchFilters } from './api';
 import { carKeys } from './queryKeys';
 import { FilterValue } from '@/types/car';
 import { normalizeFilters, retryUnlessClientError } from './utils';
@@ -22,6 +22,15 @@ export const carsInfiniteQueryOptions = (filters: FilterValue) => {
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
       lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+    retry: retryUnlessClientError,
+    staleTime: CARS_STALE_TIME,
+  });
+};
+
+export const carDetailsQueryOptions = (carId: string) => {
+  return queryOptions({
+    queryKey: carKeys.detail(carId),
+    queryFn: () => fetchCarById(carId),
     retry: retryUnlessClientError,
     staleTime: CARS_STALE_TIME,
   });

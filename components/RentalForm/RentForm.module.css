@@ -1,0 +1,30 @@
+.rentalFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 32px;
+  background-color: var(--color-white);
+  border-radius: 16px;
+  gap: 24px;
+}
+
+.title {
+  color: var(--color-main);
+}
+
+.description {
+  margin-top: 8px;
+  color: var(--color-gray);
+}
+
+.rentalForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 32px;
+}
+
+.rentalForm > button[type='submit'] {
+  margin-top: 8px;
+}

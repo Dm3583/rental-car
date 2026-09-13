@@ -14,13 +14,15 @@ export interface Car {
   mileage: number;
   stockNumber: number;
   features: string[];
-  location: {
-    country: string;
-    city: string;
-    address: string;
-  };
+  location: CarLocation;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CarLocation {
+  country: string;
+  city: string;
+  address: string;
 }
 
 export interface PriceRange {
@@ -36,7 +38,7 @@ export interface Filters {
 export interface RentForm {
   name: string;
   email: string;
-  comment?: string;
+  comment: string;
 }
 
 export interface FilterValue {
