@@ -2,20 +2,20 @@
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import { Toaster } from 'react-hot-toast';
 import { carDetailsQueryOptions } from '@/lib/queryOptions';
 import CarGeneralInfo from '@/components/CarGeneralInfo/CarGeneralInfo';
 import CarDetailsList from '@/components/CarDetailsList/CarDetailsList';
-import css from './CarDetails.module.css';
-
+import LoadingOverlay from '@/components/LoadingOverlay/LoadingOverlay';
+import Divider from '@/components/Divider/Divider';
+import { RentForm } from '@/components/RentalForm/RentForm';
 import { BsCalendar2Week } from 'react-icons/bs';
 import { BsCarFront } from 'react-icons/bs';
 import { BsFuelPump } from 'react-icons/bs';
 import { BsGear } from 'react-icons/bs';
 import { PiRoadHorizon } from 'react-icons/pi';
 import { BsCheckCircle } from 'react-icons/bs';
-import { RentForm } from '@/components/RentalForm/RentForm';
-import Divider from '@/components/Divider/Divider';
-import { Toaster } from 'react-hot-toast';
+import css from './CarDetails.module.css';
 
 export default function CarDetailsClient() {
   const { carId } = useParams<{ carId: string }>();
@@ -32,14 +32,14 @@ export default function CarDetailsClient() {
   if (isLoading) {
     return (
       <div className={css.container}>
-        <p>Loading, please wait...</p>
+        <LoadingOverlay title='Loading...' fullScreen />
       </div>
     );
   }
 
   if (error || !car) {
     return (
-      <div className={css.container}>
+      <div className={`${css.container} ${css.errorWrapper}`}>
         <p>Something went wrong.</p>
       </div>
     );
@@ -90,9 +90,6 @@ export default function CarDetailsClient() {
             height={512}
             loading='eager'
           />
-          <div className={css.formWrapper}>
-            <RentForm carId={carId} />
-          </div>
         </div>
         <div className={css.rightBlock}>
           <div className={css.infoWrapper}>
@@ -106,16 +103,22 @@ export default function CarDetailsClient() {
               stockNumber={car.stockNumber}
             />
 
-            <CarDetailsList title='Car Details' items={rentalConditions} />
+            <CarDetailsList
+              title='Rental Conditions:'
+              items={rentalConditions}
+            />
             <Divider />
 
             <CarDetailsList
-              title='Car Specifications'
+              title='Car Specifications:'
               items={carSpecifications}
             />
             <Divider />
-            <CarDetailsList title='Car Features' items={carFeatures} />
+            <CarDetailsList title='Car Features:' items={carFeatures} />
           </div>
+        </div>
+        <div className={css.formWrapper}>
+          <RentForm carId={carId} />
         </div>
       </div>
       <Toaster position='top-center' />

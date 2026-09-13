@@ -19,8 +19,6 @@
   align-items: center;
   gap: 8px;
 }
-
-/* react-icons sets size through the width/height attributes, which any CSS rule overrides. */
 .icon {
   flex-shrink: 0;
   width: 16px;

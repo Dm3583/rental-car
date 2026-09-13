@@ -30,7 +30,10 @@ export default function CarGeneralInfo({
         </span>
       </h2>
       <p className={`${css.location} bodyMd`}>
-        <BsGeoAlt /> <span>{location.country}, {location.city}</span>
+        <BsGeoAlt />{' '}
+        <span>
+          {location.country}, {location.city}
+        </span>
       </p>
       <p className={`${css.rentalPrice} title2`}>
         <span>${rentalPrice}</span>

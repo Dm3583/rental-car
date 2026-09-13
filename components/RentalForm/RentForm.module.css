@@ -9,6 +9,12 @@
   gap: 24px;
 }
 
+@media (max-width: 767.98px) {
+  .rentalFormContainer {
+    padding: 16px;
+  }
+}
+
 .title {
   color: var(--color-main);
 }
@@ -22,7 +28,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 32px;
+  gap: 16px;
 }
 
 .rentalForm > button[type='submit'] {

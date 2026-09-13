@@ -6,6 +6,10 @@ import {
   FilterValue,
 } from '@/types/car';
 
+export const SITE_URL = 'https://rental-car-two-khaki.vercel.app';
+
+export const SITE_NAME = 'Rental Car';
+
 export const toNumberOrUndefined = (raw: string): number | undefined => {
   if (raw === '') return undefined;
 
@@ -96,3 +100,60 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const isValidEmail = (email: string): boolean =>
   EMAIL_PATTERN.test(email.trim());
+
+interface ApiErrorBody {
+  message?: string;
+  validation?: Partial<
+    Record<'body' | 'query' | 'params', { message?: string; keys?: string[] }>
+  >;
+}
+
+export const getApiErrorMessage = (
+  error: unknown,
+  fallback = 'Something went wrong',
+): string => {
+  if (!isAxiosError<ApiErrorBody>(error)) return fallback;
+
+  const data = error.response?.data;
+  const validation = data?.validation;
+  const detail =
+    validation?.body?.message ??
+    validation?.query?.message ??
+    validation?.params?.message;
+
+  return detail ?? data?.message ?? fallback;
+};
+
+export const getApiFieldErrors = (error: unknown): Record<string, string> => {
+  if (!isAxiosError<ApiErrorBody>(error)) return {};
+
+  const body = error.response?.data?.validation?.body;
+  const message = body?.message;
+
+  if (!message || !body?.keys?.length) return {};
+
+  return Object.fromEntries(body.keys.map((key) => [key, message]));
+};
+
+export const describeFilters = (filters: FilterValue): string => {
+  const parts: string[] = [];
+  const { brand, price, minMileage, maxMileage } = filters;
+
+  if (brand) parts.push(brand);
+  if (price) parts.push(`up to $${price}/hour`);
+
+  if (minMileage && maxMileage) parts.push(`${minMileage}-${maxMileage} km`);
+  else if (minMileage) parts.push(`from ${minMileage} km`);
+  else if (maxMileage) parts.push(`up to ${maxMileage} km`);
+
+  return parts.join(', ');
+};
+
+export const truncateText = (text: string, maxLength = 150): string => {
+  if (text.length <= maxLength) return text;
+
+  const cut = text.slice(0, maxLength);
+  const lastSpace = cut.lastIndexOf(' ');
+
+  return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+};

@@ -22,7 +22,11 @@ const Button = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
-      style={maxWidth ? { maxWidth } : undefined}
+      style={
+        maxWidth
+          ? ({ '--button-max-width': `${maxWidth}px` } as React.CSSProperties)
+          : undefined
+      }
       className={`${variant === 'filled' ? css.buttonFilled : css.buttonOutlined} ${css.buttonBase} bodyMdStrong`}
     >
       {label}

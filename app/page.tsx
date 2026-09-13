@@ -3,7 +3,6 @@ import ButtonLink from '@/components/ButtonLink/ButtonLink';
 import css from './page.module.css';
 
 export default function HomePage() {
-
   return (
     <div>
       <section className={css.hero}>
@@ -24,7 +23,6 @@ export default function HomePage() {
           <ButtonLink href='/catalog' label='View Catalog' maxWidth={276} />
         </div>
       </section>
-
     </div>
   );
 }

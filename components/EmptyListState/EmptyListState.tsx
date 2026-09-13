@@ -4,7 +4,6 @@ import css from './EmptyListState.module.css';
 interface EmptyListStateProps {
   title: string;
   description?: string;
-  /** Illustration above the text; pass null to show text only. */
   imageSrc?: string | null;
 }
 

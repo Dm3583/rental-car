@@ -10,7 +10,6 @@ import { FILTER_FIELDS, FilterField, Filters, FilterValue } from '@/types/car';
 
 interface FilterBarProps {
   filters: Filters;
-  /** Starting values, taken from the URL. */
   initialValue?: FilterValue;
   onSearch: (filterValue: FilterValue) => void;
 }
@@ -23,7 +22,6 @@ export default function FilterBar({
   onSearch,
 }: FilterBarProps) {
   const [filterValue, setFilterValue] = useState<FilterValue>(initialValue);
-  // Set by a blocked Search so the mileage message shows even if focus is still in the range.
   const [isMileageErrorForced, setIsMileageErrorForced] = useState(false);
 
   const handleFilterChange = (name: FilterField, value: string) => {

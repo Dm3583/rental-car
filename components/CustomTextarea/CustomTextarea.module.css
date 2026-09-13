@@ -31,7 +31,6 @@
 .customTextarea.error {
   border-color: var(--color-error);
   background-color: var(--color-error-light);
-  /* Room for the icon on the right. */
   padding-right: 48px;
 }
 

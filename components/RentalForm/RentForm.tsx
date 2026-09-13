@@ -8,7 +8,11 @@ import CustomInput from '@/components/CustomInput/CustomInput';
 import CustomTextarea from '@/components/CustomTextarea/CustomTextarea';
 import Button from '@/components/Button/Button';
 import type { RentForm as RentFormValues } from '@/types/car';
-import { isValidEmail } from '@/lib/utils';
+import {
+  getApiErrorMessage,
+  getApiFieldErrors,
+  isValidEmail,
+} from '@/lib/utils';
 import css from './RentForm.module.css';
 
 interface RentFormProps {
@@ -19,12 +23,14 @@ type FormErrors = Partial<Record<keyof RentFormValues, string>>;
 
 const EMPTY_FORM: RentFormValues = { name: '', email: '', comment: '' };
 
+const FORM_FIELDS = Object.keys(EMPTY_FORM) as (keyof RentFormValues)[];
+
 const validate = (values: RentFormValues): FormErrors => {
   const errors: FormErrors = {};
 
   if (!values.name.trim()) errors.name = 'Please enter your full name.';
   if (!isValidEmail(values.email)) {
-    errors.email = 'Please enter your valid email.';
+    errors.email = 'Please enter your email.';
   }
   if (!values.comment?.trim()) errors.comment = 'Comment is required.';
 
@@ -38,12 +44,25 @@ export function RentForm({ carId }: RentFormProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: (values: RentFormValues) => createBookingCar(carId, values),
     onSuccess: (data) => {
-      toast.success(data.message || 'Your booking request has been sent.');
+      toast.success(data.message || 'Your booking request has been sent.', {
+        duration: 10_000,
+      });
       setForm(EMPTY_FORM);
       setErrors({});
     },
-    onError: () => {
-      toast.error('Something went wrong');
+    onError: (error) => {
+      toast.error(getApiErrorMessage(error), {
+        duration: 10_000,
+      });
+
+      const serverErrors = getApiFieldErrors(error);
+      const fieldErrors: FormErrors = {};
+
+      for (const field of FORM_FIELDS) {
+        if (serverErrors[field]) fieldErrors[field] = serverErrors[field];
+      }
+
+      setErrors((prev) => ({ ...prev, ...fieldErrors }));
     },
   });
 

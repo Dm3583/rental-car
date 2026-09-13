@@ -1,11 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import MobileMenu from '../MobileMenu/MobileMenu';
+import { NAVIGATION_LINKS } from './navigation';
 import css from './Header.module.css';
-
-const NAVIGATION_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/catalog', label: 'Catalog' },
-];
 
 const Header = () => {
   return (
@@ -15,7 +12,7 @@ const Header = () => {
           <Image src='/Logo.svg' alt='Rental Car' width={104} height={16} />
         </Link>
 
-        <nav aria-label='Main Navigation'>
+        <nav aria-label='Main Navigation' className={css.desktopNav}>
           <ul className={css.navList}>
             {NAVIGATION_LINKS.map(({ href, label }) => (
               <li key={href} className={css.navItem}>
@@ -26,6 +23,8 @@ const Header = () => {
             ))}
           </ul>
         </nav>
+
+        <MobileMenu />
       </div>
     </header>
   );

@@ -44,8 +44,6 @@
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-
-/* Out of the flow, so the message does not push the inputs up in the filter row. */
 .error {
   position: absolute;
   top: 100%;

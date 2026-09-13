@@ -4,8 +4,6 @@
   z-index: 20;
   background-color: rgb(245 245 245 / 0.8);
 }
-
-/* Page-level loading: there is no positioned parent to cover. */
 .fullScreen {
   position: fixed;
   inset: 68px 0 0;

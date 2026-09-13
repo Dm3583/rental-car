@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: var(--button-max-width, none);
   height: 44px;
   padding: 0 16px;
   border-radius: 12px;

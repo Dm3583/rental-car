@@ -1,25 +1,28 @@
 .detailsWrapper {
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 640fr) minmax(0, 528fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'photo info'
+    'form info';
+  gap: 32px;
   position: relative;
   max-width: 1200px;
-  gap: 32px;
   margin: 0 auto;
   padding: 84px 0;
 }
 
 .leftBlock {
-  width: 100%;
-  max-width: 640px;
+  grid-area: photo;
 }
 
 .formWrapper {
-  margin-top: 32px;
+  grid-area: form;
+  align-self: start;
 }
 
 .rightBlock {
-  width: 100%;
-  max-width: 528px;
+  grid-area: info;
   padding: 32px 24px;
   background-color: var(--color-white);
   border-radius: 16px;
@@ -41,9 +44,27 @@
 
 .errorWrapper {
   display: flex;
+  flex-direction: column;
+  gap: 24px;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 48px;
 }
- 
+
+@media (max-width: 767.98px) {
+  .detailsWrapper {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      'photo'
+      'info'
+      'form';
+    gap: 24px;
+    padding: 32px 0;
+  }
+
+  .rightBlock {
+    padding: 24px 16px;
+  }
+}

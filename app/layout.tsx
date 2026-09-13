@@ -3,6 +3,7 @@ import 'modern-normalize';
 import { Manrope } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import Header from '@/components/Header/Header';
+import { SITE_NAME, SITE_URL } from '@/lib/utils';
 import './globals.css';
 
 const manrope = Manrope({
@@ -13,14 +14,17 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: 'Rental Car',
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
   description: 'A simple rental car application.',
-  metadataBase: new URL('https://rental-car-neoversity.example.app'),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: 'Rental Car',
+    title: SITE_NAME,
     description: 'A simple rental car application.',
-    url: 'https://rental-car-neoversity.example.app',
-    siteName: 'Rental Car',
+    url: '/',
+    siteName: SITE_NAME,
     type: 'website',
     images: [
       {
@@ -32,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rental Car',
+    title: SITE_NAME,
     description: 'A simple rental car application.',
-    images: [{ url: '/og-image.png', alt: 'Rental Car' }],
+    images: [{ url: '/og-image.png', alt: SITE_NAME }],
   },
 };
 

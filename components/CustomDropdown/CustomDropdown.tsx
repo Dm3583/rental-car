@@ -56,7 +56,6 @@ const CustomDropdown = <TName extends string = string>({
     ? [{ value: '', label: resetLabel }, ...options]
     : options;
 
-  // '' and undefined both mean "nothing chosen".
   const hasValue = Boolean(value);
   const selectedIndex = allOptions.findIndex(
     (option) => option.value === (value ?? ''),
@@ -242,7 +241,6 @@ const CustomDropdown = <TName extends string = string>({
                   ]
                     .filter(Boolean)
                     .join(' ')}
-                  // Keep focus on the trigger so aria-activedescendant stays valid.
                   onMouseDown={(e) => e.preventDefault()}
                   onMouseEnter={() => setActiveIndex(index)}
                   onClick={() => handleSelect(option.value)}
