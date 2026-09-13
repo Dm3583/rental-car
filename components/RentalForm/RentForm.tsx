@@ -29,8 +29,10 @@ const validate = (values: RentFormValues): FormErrors => {
   const errors: FormErrors = {};
 
   if (!values.name.trim()) errors.name = 'Please enter your full name.';
-  if (!isValidEmail(values.email)) {
+  if (!values.email.trim()) {
     errors.email = 'Please enter your email.';
+  } else if (!isValidEmail(values.email)) {
+    errors.email = 'Please enter a valid email.';
   }
   if (!values.comment?.trim()) errors.comment = 'Comment is required.';
 
